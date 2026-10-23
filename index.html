@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물방구와 활방구로 배우는 중중모리장단</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Jua, Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+        .font-jua {
+            font-family: 'Jua', sans-serif;
+        }
+        /* Custom Glowing & Bounce Effect */
+        .btn-water {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            box-shadow: 0 8px 20px -4px rgba(6, 182, 212, 0.5);
+        }
+        .btn-water:active {
+            transform: scale(0.95);
+        }
+        .btn-bow {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5);
+        }
+        .btn-bow:active {
+            transform: scale(0.95);
+        }
+        .beat-active {
+            transform: scale(1.15);
+            border-color: #f59e0b !important;
+            background-color: rgba(245, 158, 11, 0.25) !important;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 md:p-8 min-h-screen">
+
+    <!-- Header -->
+    <header class="text-center my-4 max-w-2xl">
+        <h1 class="text-4xl md:text-5xl font-jua text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-300 to-pink-400 mb-2">
+            💨 물방구 & 활방구 중중모리장단 🎶
+        </h1>
+        <p class="text-slate-300 text-sm md:text-base">
+            물방구(퐁~!)와 활방구(슉~!)로 우리 소리 <b>중중모리장단</b>(12박자)을 연주해봅시다!
+        </p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-4xl bg-slate-800/80 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-slate-700 shadow-2xl space-y-8">
+
+        <!-- Rhythm Visualizer (12 Beats) -->
+        <section>
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-xl font-jua text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-drum"></i> 중중모리장단 (3박자 × 4마디 = 12박)
+                </h2>
+                <span id="bpmDisplay" class="text-sm font-bold bg-slate-700 px-3 py-1 rounded-full text-cyan-300">
+                    BPM: 90
+                </span>
+            </div>
+
+            <!-- Beats Grid -->
+            <div class="grid grid-cols-4 md:grid-cols-12 gap-2 text-center" id="beatGrid">
+                <!-- Javascript will populate 12 beat cards here -->
+            </div>
+            
+            <div class="mt-3 text-xs text-slate-400 flex justify-between px-1">
+                <span>1소박 (쿵/덩)</span>
+                <span>2소박 (덕)</span>
+                <span>3소박 (쿵)</span>
+                <span>4소박 (덕)</span>
+            </div>
+        </section>
+
+        <!-- Pad Controls for Manual Play -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Both Hands Water Fart -->
+            <button id="moolBothBtn" onclick="playMoolBoth()" class="btn-water rounded-2xl p-4 text-center transition-all transform active:scale-95 cursor-pointer flex flex-col items-center justify-center gap-2 group">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🙌
+                </div>
+                <div>
+                    <h3 class="text-lg font-jua text-white">물방구 (양손)</h3>
+                    <p class="text-cyan-100 text-[11px] mt-0.5">묵직한 두 손 울림 (덩)</p>
+                </div>
+                <span class="text-[10px] bg-black/30 text-cyan-200 px-2.5 py-0.5 rounded-full">단축키: W / ↑</span>
+            </button>
+
+            <!-- Right Hand Water Fart -->
+            <button id="moolRightBtn" onclick="playMoolRight()" class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-4 text-center transition-all transform active:scale-95 cursor-pointer flex flex-col items-center justify-center gap-2 group shadow-lg shadow-teal-500/30">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    👉
+                </div>
+                <div>
+                    <h3 class="text-lg font-jua text-white">물방구 (오른손)</h3>
+                    <p class="text-cyan-100 text-[11px] mt-0.5">높은 퐁당 소리 (오)</p>
+                </div>
+                <span class="text-[10px] bg-black/30 text-cyan-200 px-2.5 py-0.5 rounded-full">단축키: D / →</span>
+            </button>
+
+            <!-- Left Hand Water Fart -->
+            <button id="moolLeftBtn" onclick="playMoolLeft()" class="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-4 text-center transition-all transform active:scale-95 cursor-pointer flex flex-col items-center justify-center gap-2 group shadow-lg shadow-indigo-500/30">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    👈
+                </div>
+                <div>
+                    <h3 class="text-lg font-jua text-white">물방구 (왼손)</h3>
+                    <p class="text-blue-100 text-[11px] mt-0.5">낮은 쿵 소리 (왼)</p>
+                </div>
+                <span class="text-[10px] bg-black/30 text-blue-200 px-2.5 py-0.5 rounded-full">단축키: A / ←</span>
+            </button>
+
+            <!-- Bow Fart Pad -->
+            <button id="hwalBtn" onclick="playHwal()" class="btn-bow rounded-2xl p-4 text-center transition-all transform active:scale-95 cursor-pointer flex flex-col items-center justify-center gap-2 group">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🎻
+                </div>
+                <div>
+                    <h3 class="text-lg font-jua text-white">활방구 (슉)</h3>
+                    <p class="text-pink-100 text-xs mt-0.5">날카로운 활 마찰음 (│)</p>
+                </div>
+                <span class="text-[10px] bg-black/30 text-pink-200 px-2.5 py-0.5 rounded-full">단축키: S / ↓</span>
+            </button>
+        </section>
+
+        <!-- Rhythm Pattern Selector & Auto Play Controls -->
+        <section class="bg-slate-900/60 p-5 rounded-2xl border border-slate-700/50 space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                
+                <!-- Pattern Selector -->
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <label for="patternSelect" class="text-sm font-bold text-slate-300 whitespace-nowrap">장단 선택:</label>
+                    <select id="patternSelect" onchange="changePattern()" class="bg-slate-800 text-cyan-300 border border-slate-600 text-sm rounded-xl px-4 py-2 focus:ring-2 focus:ring-cyan-400 focus:outline-none w-full">
+                        <option value="scorePattern" selected>📜 교재 예시 악보 (양, 오, 왼 조합)</option>
+                        <option value="basic">기본 중중모리 (양 - 오 왼 오 오...)</option>
+                        <option value="fast">흥겨운 중중모리 (변형 1)</option>
+                        <option value="custom">나만의 장단 만들기 (클릭하여 편집)</option>
+                    </select>
+                </div>
+
+                <!-- Tempo Control Slider -->
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <label for="tempoSlider" class="text-sm font-bold text-slate-300 whitespace-nowrap">속도 (BPM):</label>
+                    <input type="range" id="tempoSlider" min="50" max="150" value="90" oninput="updateTempo(this.value)" class="w-full md:w-32 accent-cyan-400 cursor-pointer">
+                </div>
+
+                <!-- Play / Stop Buttons -->
+                <div class="flex gap-2 w-full md:w-auto justify-end">
+                    <button id="startBtn" onclick="togglePlay()" class="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-jua px-6 py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-lg shadow-emerald-500/30 cursor-pointer">
+                        <i class="fa-solid fa-play"></i> 악보 연주하기
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Guide Footer -->
+    <footer class="mt-6 text-center text-xs text-slate-400 space-y-1">
+        <p>💡 <b>악보 읽는 법:</b> [양] = 물방구 양손 + 활방구 | [오] = 물방구 오른손 + 활방구 | [왼] = 물방구 왼손 + 활방구</p>
+        <p>© 2026 물방구 & 활방구 국악 리듬 스튜디오</p>
+    </footer>
+
+    <!-- Audio Synthesis & Logic Script -->
+    <script>
+        // Web Audio Context initialization
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // --- Sound Synthesizers ---
+        // Base Moolbanggoo sound renderer with pitch modifier
+        function createMoolSound(baseFreq, sweepFreq, decayTime) {
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(baseFreq, now);
+            osc.frequency.exponentialRampToValueAtTime(sweepFreq, now + 0.07);
+            osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.7, now + decayTime);
+
+            gain.gain.setValueAtTime(0.8, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + decayTime);
+
+            // Water bubble noise burst
+            const bufferSize = audioCtx.sampleRate * 0.08;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const noiseFilter = audioCtx.createBiquadFilter();
+            noiseFilter.type = 'bandpass';
+            noiseFilter.frequency.value = sweepFreq * 2.5;
+
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.setValueAtTime(0.25, now);
+            noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.connect(noiseFilter);
+            noiseFilter.connect(noiseGain);
+            noiseGain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + decayTime);
+            noise.start(now);
+            noise.stop(now + 0.08);
+        }
+
+        // 1-1. Both Hands (양) - Rich & deep low pitch
+        function playMoolBoth() {
+            createMoolSound(70, 260, 0.3);
+            flashButton('moolBothBtn', 'ring-cyan-300');
+        }
+
+        // 1-2. Right Hand (오) - Higher pitch pop
+        function playMoolRight() {
+            createMoolSound(110, 420, 0.2);
+            flashButton('moolRightBtn', 'ring-teal-300');
+        }
+
+        // 1-3. Left Hand (왼) - Medium-low pitch
+        function playMoolLeft() {
+            createMoolSound(85, 300, 0.22);
+            flashButton('moolLeftBtn', 'ring-indigo-300');
+        }
+
+        // 2. Bow Fart Sound (활방구) - Sawtooth friction + Buzz effect
+        function playHwal() {
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = audioCtx.createBiquadFilter();
+
+            osc.type = 'sawtooth';
+            
+            osc.frequency.setValueAtTime(160, now);
+            osc.frequency.linearRampToValueAtTime(90, now + 0.15);
+            osc.frequency.linearRampToValueAtTime(120, now + 0.2);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(1200, now);
+            filter.Q.value = 8;
+
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.2);
+
+            flashButton('hwalBtn', 'ring-pink-300');
+        }
+
+        function flashButton(id, colorClass) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            btn.classList.add('ring-4', colorClass);
+            setTimeout(() => btn.classList.remove('ring-4', colorClass), 150);
+        }
+
+        // --- Rhythm Sequencer Data & Logic ---
+        // Types: 
+        // 'BOTH' (양), 'RIGHT' (오), 'LEFT' (왼), 'HWAL' (활만), '-' (쉬고)
+        const patterns = {
+            // Uploaded Score Image: [양, -, 오, 왼, 오, 오, 왼, 왼, 오, 왼, -, 왼]
+            scorePattern: [
+                { type: 'BOTH', name: '양' },   // 1박
+                { type: '-', name: '-' },       // 2박
+                { type: 'RIGHT', name: '오' },  // 3박
+                { type: 'LEFT', name: '왼' },   // 4박
+                { type: 'RIGHT', name: '오' },  // 5박
+                { type: 'RIGHT', name: '오' },  // 6박
+                { type: 'LEFT', name: '왼' },   // 7박
+                { type: 'LEFT', name: '왼' },   // 8박
+                { type: 'RIGHT', name: '오' },  // 9박
+                { type: 'LEFT', name: '왼' },   // 10박
+                { type: '-', name: '-' },       // 11박
+                { type: 'LEFT', name: '왼' }    // 12박
+            ],
+            basic: [
+                { type: 'BOTH', name: '양' },
+                { type: '-', name: '-' },
+                { type: '-', name: '-' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'BOTH', name: '양' },
+                { type: '-', name: '-' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'RIGHT', name: '오' },
+                { type: '-', name: '-' }
+            ],
+            fast: [
+                { type: 'BOTH', name: '양' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'BOTH', name: '양' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'LEFT', name: '왼' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'RIGHT', name: '오' },
+                { type: 'LEFT', name: '왼' }
+            ],
+            custom: Array(12).fill(null).map(() => ({ type: '-', name: '-' }))
+        };
+
+        let currentPattern = patterns.scorePattern.map(item => ({ ...item }));
+        let currentBeat = 0;
+        let isPlaying = false;
+        let bpm = 90;
+        let timerId = null;
+
+        // Render 12 Beat Visual Cards
+        function renderBeats() {
+            const grid = document.getElementById('beatGrid');
+            grid.innerHTML = '';
+
+            currentPattern.forEach((beat, index) => {
+                const card = document.createElement('div');
+                card.id = `beat-${index}`;
+                card.onclick = () => toggleBeatCustom(index);
+                
+                let bgClass = 'bg-slate-700/50 border-slate-600 text-slate-400';
+                let topLabel = '물방구';
+                let mainText = '-';
+                let bowIndicator = '│'; // Bow mark from score
+                
+                if (beat.type === 'BOTH') {
+                    bgClass = 'bg-purple-900/60 border-purple-400 text-yellow-300 font-bold';
+                    mainText = '양';
+                } else if (beat.type === 'RIGHT') {
+                    bgClass = 'bg-teal-900/50 border-teal-400 text-teal-200 font-bold';
+                    mainText = '오';
+                } else if (beat.type === 'LEFT') {
+                    bgClass = 'bg-indigo-900/50 border-indigo-400 text-indigo-200 font-bold';
+                    mainText = '왼';
+                } else if (beat.type === 'HWAL') {
+                    bgClass = 'bg-pink-900/40 border-pink-500 text-pink-300';
+                    mainText = '-';
+                } else {
+                    bowIndicator = ''; // Rest
+                }
+
+                card.className = `border-2 rounded-xl p-2 flex flex-col items-center justify-between cursor-pointer transition-all duration-100 min-h-[90px] ${bgClass}`;
+                
+                card.innerHTML = `
+                    <span class="text-[10px] opacity-60 text-slate-300">${index + 1}박</span>
+                    <div class="text-xl font-jua my-1">${mainText}</div>
+                    <div class="text-xs font-bold text-pink-400">${bowIndicator}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Toggle beat state for custom pattern
+        function toggleBeatCustom(index) {
+            const select = document.getElementById('patternSelect');
+            select.value = 'custom';
+            
+            const states = ['-', 'BOTH', 'RIGHT', 'LEFT', 'HWAL'];
+            const names = { '-': '-', 'BOTH': '양', 'RIGHT': '오', 'LEFT': '왼', 'HWAL': '-' };
+            const currType = currentPattern[index].type;
+            const nextType = states[(states.indexOf(currType) + 1) % states.length];
+            
+            currentPattern[index] = { type: nextType, name: names[nextType] };
+            renderBeats();
+        }
+
+        // Change Preset Pattern
+        function changePattern() {
+            const val = document.getElementById('patternSelect').value;
+            currentPattern = patterns[val].map(item => ({ ...item }));
+            renderBeats();
+        }
+
+        // Update BPM
+        function updateTempo(val) {
+            bpm = val;
+            document.getElementById('bpmDisplay').innerText = `BPM: ${bpm}`;
+            if (isPlaying) {
+                restartLoop();
+            }
+        }
+
+        // Play Sound per Beat
+        function playStep() {
+            // Remove highlight from previous beat
+            const prevBeat = (currentBeat + 11) % 12;
+            const prevElem = document.getElementById(`beat-${prevBeat}`);
+            if (prevElem) prevElem.classList.remove('beat-active');
+
+            // Highlight current beat
+            const currElem = document.getElementById(`beat-${currentBeat}`);
+            if (currElem) currElem.classList.add('beat-active');
+
+            // Trigger sound for current step
+            const item = currentPattern[currentBeat];
+            if (item.type === 'BOTH') {
+                playMoolBoth();
+                playHwal();
+            } else if (item.type === 'RIGHT') {
+                playMoolRight();
+                playHwal();
+            } else if (item.type === 'LEFT') {
+                playMoolLeft();
+                playHwal();
+            } else if (item.type === 'HWAL') {
+                playHwal();
+            }
+
+            // Advance step
+            currentBeat = (currentBeat + 1) % 12;
+        }
+
+        // Toggle Sequencer Auto Play
+        function togglePlay() {
+            initAudio();
+            const startBtn = document.getElementById('startBtn');
+            
+            if (isPlaying) {
+                clearInterval(timerId);
+                isPlaying = false;
+                startBtn.innerHTML = `<i class="fa-solid fa-play"></i> 악보 연주하기`;
+                startBtn.className = startBtn.className.replace('bg-rose-500 hover:bg-rose-600', 'bg-emerald-500 hover:bg-emerald-600');
+                
+                // Clear active highlight
+                document.querySelectorAll('#beatGrid > div').forEach(el => el.classList.remove('beat-active'));
+            } else {
+                isPlaying = true;
+                currentBeat = 0;
+                startBtn.innerHTML = `<i class="fa-solid fa-square"></i> 정지`;
+                startBtn.className = startBtn.className.replace('bg-emerald-500 hover:bg-emerald-600', 'bg-rose-500 hover:bg-rose-600');
+                
+                startLoop();
+            }
+        }
+
+        function startLoop() {
+            const interval = (60 / bpm / 3) * 1000; // 8th note triplet speed
+            playStep();
+            timerId = setInterval(playStep, interval);
+        }
+
+        function restartLoop() {
+            clearInterval(timerId);
+            startLoop();
+        }
+
+        // Keyboard Controls
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
+                playMoolBoth();
+            } else if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') {
+                playMoolRight();
+            } else if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') {
+                playMoolLeft();
+            } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
+                playHwal();
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                togglePlay();
+            }
+        });
+
+        // Initial Load
+        window.onload = () => {
+            renderBeats();
+        };
+    </script>
+</body>
+</html>
